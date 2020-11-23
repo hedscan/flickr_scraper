@@ -3,18 +3,17 @@
 import argparse
 import os
 import time
+import json
 
 from flickrapi import FlickrAPI
 
 from utils.general import download_uri
 
-key = ''  # Flickr API key https://www.flickr.com/services/apps/create/apply
-secret = ''
+# Get Flickr API key at https://www.flickr.com/services/apps/create/apply
 
-
-def get_urls(search='honeybees on flowers', n=10, download=False):
+def get_urls(api_key, search='honeybees on flowers', n=10, download=False):
     t = time.time()
-    flickr = FlickrAPI(key, secret)
+    flickr = FlickrAPI(api_key['key'], api_key['secret'])
     license = ()  # https://www.flickr.com/services/api/explore/?method=flickr.photos.licenses.getInfo
     photos = flickr.walk(text=search,  # http://www.flickr.com/services/api/flickr.photos.search.html
                          extras='url_o',
@@ -54,11 +53,15 @@ def get_urls(search='honeybees on flowers', n=10, download=False):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
+    parser.add_argument('key', type=argparse.FileType('r'), help='Flickr API key JSON file')
     parser.add_argument('--search', type=str, default='honeybees on flowers', help='flickr search term')
     parser.add_argument('--n', type=int, default=10, help='number of images')
     parser.add_argument('--download', action='store_true', help='download images')
     opt = parser.parse_args()
+    
+    api_key = json.load(opt.key)
 
-    get_urls(search=opt.search,  # search term
+    get_urls(api_key,
+             search=opt.search,  # search term
              n=opt.n,  # max number of images
              download=opt.download)  # download images
