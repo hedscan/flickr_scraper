@@ -1,26 +1,38 @@
- <img src="https://storage.googleapis.com/ultralytics/logo/logoname1000.png" width="160">
+# Flickr Scraper - Fork Info
 
-# Introduction
+This fork is maintained by Gethin Davies, and optimised for scraping of images for use as training data for generative adversarial networks.
+
+## Changes
+
+- FlickrAPI.json passed as positional argument to `flickr_scraper.py`
+
+## Original ReadMe
+
+<img src="https://storage.googleapis.com/ultralytics/logo/logoname1000.png" width="160">
+
+### Introduction
 
 This directory contains Flickr image-scraping software developed by Ultralytics LLC, and **is freely available for redistribution under the GPL-3.0 license**. For more information please visit https://www.ultralytics.com.
 
-# Requirements
+### Requirements
 
 Python 3.7 or later with all of the `pip install -U -r requirements.txt` packages including:
+
 - `flickrapi`
 
-# Install
+### Install
 ```bash
 $ git clone https://github.com/ultralytics/flickr_scraper
 $ cd flickr_scraper
 $ pip install -U -r requirements.txt
 ```
 
-# Use
+### Use
 
-1. Request a Flickr API key: https://www.flickr.com/services/apps/create/apply
+1. Request a Flickr API key: <https://www.flickr.com/services/apps/create/apply>
 
 2. Write your API key and secret in `flickr_scraper.py` L9-L10:
+
 ```python
 key = ''
 secret = ''
@@ -44,12 +56,13 @@ $ python3 flickr_scraper.py --search 'honeybees on flowers' --n 10 --download
 Done. (4.1s)
 All images saved to /Users/glennjocher/PycharmProjects/flickr_scraper/images/honeybees_on_flowers/
 ```
+
 <img src="https://user-images.githubusercontent.com/26833433/75074332-4792c600-54b0-11ea-8c98-22acf58ba8e7.jpg" width="">
 
-# Cite
+### Cite
 
 [![DOI](https://zenodo.org/badge/242235660.svg)](https://zenodo.org/badge/latestdoi/242235660)
 
-# Contact
+### Contact
 
-**Issues should be raised directly in the repository.** For additional questions or comments please email Glenn Jocher at glenn.jocher@ultralytics.com or visit us at https://contact.ultralytics.com.
+**Issues should be raised directly in the repository.** For additional questions or comments please email Glenn Jocher at glenn.jocher@ultralytics.com or visit us at <https://contact.ultralytics.com>.
