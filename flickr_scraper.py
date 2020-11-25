@@ -77,7 +77,8 @@ def get_urls(image_tag: str, n: int, minsize=0, verbose=False):
                     continue
                 urls.append(url)
                 if verbose:
-                    print(f"{len(urls):02d}/{n} {url}\t{size}")
+                    fmt = f'0{len(str(n))}d'
+                    print(f"{len(urls):{fmt}}/{n} {url}\t{size}")
             # If no url available for desired size try next img
         else:
             break
