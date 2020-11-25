@@ -17,24 +17,25 @@ from utils.general import download_uri
 
 
 # decending size order
-SIZES = ["url_o",  # o: Original (4520 x 3229)
-         "url_k",  # k: Large 2048 (2048 x 1463)
-         "url_h",  # h: Large 1600 (1600 x 1143)
-         "url_l",  # l: Large 1024 (1024 x 732)
-         "url_c",  # c: Medium 800 (800 x 572)
-         "url_z",  # z: Medium 640 (640 x 457)
-         "url_m",  # m: Medium 500 (500 x 357)
-         "url_n",  # n: Small 320 (320 x 229)
-         "url_s",  # s: Small 240 (240 x 171)
-         "url_t",  # t: Thumbnail (100 x 71)
-         "url_q",  # q: Square 150 (150 x 150)
-         "url_sq", # sq: Square 75 (75 x 75)
+SIZES = ["url_o",   # o: Original (4520 x 3229)
+         "url_k",   # k: Large 2048 (2048 x 1463)
+         "url_h",   # h: Large 1600 (1600 x 1143)
+         "url_l",   # l: Large 1024 (1024 x 732)
+         "url_c",   # c: Medium 800 (800 x 572)
+         "url_z",   # z: Medium 640 (640 x 457)
+         "url_m",   # m: Medium 500 (500 x 357)
+         "url_n",   # n: Small 320 (320 x 229)
+         "url_s",   # s: Small 240 (240 x 171)
+         "url_t",   # t: Thumbnail (100 x 71)
+         "url_q",   # q: Square 150 (150 x 150)
+         "url_sq",  # sq: Square 75 (75 x 75)
          ]
 
 
 def get_largest_url(img):
     """ Get URL of Flickr image.
-    Returns URL of largest available, and associated size suffix in flickr API"""
+    Returns tuple of URL of largest available image, and associated size suffix
+    """
     for size in SIZES:
         url = img.get(size)
         if url:
@@ -48,7 +49,7 @@ def get_size(img, suffix='o'):
     return tuple(map(int, (w, h)))
 
 
-def get_images(image_tag: str='honeybees on flowers', n_images: int=10):
+def get_images(image_tag='honeybees on flowers', n_images=10):
     extras = ','.join(SIZES)
     flickr = FlickrAPI(API_KEY['key'], API_KEY['secret'])
     license = ()  # https://www.flickr.com/services/api/explore/?method=flickr.imgs.licenses.getInfo
@@ -60,7 +61,7 @@ def get_images(image_tag: str='honeybees on flowers', n_images: int=10):
     return images
 
 
-def get_urls(image_tag: str, n: int, minsize=0, verbose: bool=False):
+def get_urls(image_tag: str, n: int, minsize=0, verbose=False):
     """ Get list of `n` Flickr image URLs given a search term `image_tag` """
     images = get_images(image_tag)
 
@@ -77,9 +78,6 @@ def get_urls(image_tag: str, n: int, minsize=0, verbose: bool=False):
                 urls.append(url)
                 if verbose:
                     print(f"{len(urls):02d}/{n} {url}\t{size}")
-            # elif url is None:
-            #     url = 'https://farm%s.staticflickr.com/%s/%s_%s_b.jpg' % \
-            #     (img.get('farm'), img.get('server'), img.get('id'), img.get('secret'))  # large size
             # If no url available for desired size try next img
         else:
             break
@@ -107,7 +105,7 @@ if __name__ == '__main__':
     parser.add_argument('--n', type=int, default=10, help='number of images')
     parser.add_argument('--download', action='store_true', help='download images')
     parser.add_argument('--out_dir', help="output directory", default=None)
-    parser.add_argument('--originals', action='store_true')
+    parser.add_argument('--originals', action='store_true', help="force original sizes only")
     parser.add_argument('--minsize', type=int, default=1024, help="minimum image dimension")
     parser.add_argument('-v', '--verbose', action='store_true', help="print fetched URIs")
     args = parser.parse_args()
@@ -117,9 +115,7 @@ if __name__ == '__main__':
                           " To download images use `--download`")
     # default search directory: `./images/search_terms_used/`
     if not args.out_dir:
-            args.out_dir = os.path.join(os.getcwd(), 
-                                        'images',
-                                        args.search.replace(' ', '_'))
+        args.out_dir = os.path.join(os.getcwd(), 'images', args.search.replace(' ', '_'))
 
     if args.originals:
         SIZES = 'url_o'
@@ -132,4 +128,4 @@ if __name__ == '__main__':
          minsize=args.minsize,
          out_dir=args.out_dir,
          download=args.download,
-         verbose=args.verbose)  # download images
+         verbose=args.verbose)
