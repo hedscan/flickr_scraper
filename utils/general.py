@@ -8,11 +8,11 @@ import requests
 from PIL import Image
 
 
-def download_uri(uri, dir='./'):
+def download_uri(uri, out_dir='./'):
     # Download a file from a given URI, including minimal checks
 
     # Download
-    f = dir + os.path.basename(uri)  # filename
+    f = os.path.join(out_dir, os.path.basename(uri))  # filename
     with open(f, 'wb') as file:
         file.write(requests.get(uri, timeout=10).content)
 
