@@ -8,7 +8,6 @@ This fork is maintained by Gethin Davies, and optimised for scraping of images f
 
 - FlickrAPI.json passed as positional argument to `flickr_scraper.py`
 
-
 ## Original ReadMe
 
 <img src="https://storage.googleapis.com/ultralytics/logo/logoname1000.png" width="160">
@@ -19,7 +18,7 @@ This directory contains Flickr image-scraping software developed by Ultralytics 
 
 ### Requirements
 
-Python 3.7 or later with all of the `pip install -U -r requirements.txt` packages including:
+Python 3.7.x or 3.8.x with all of the `pip install -U -r requirements.txt` packages including:
 
 - `flickrapi`
 
