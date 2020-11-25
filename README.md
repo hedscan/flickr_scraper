@@ -4,7 +4,10 @@ This fork is maintained by Gethin Davies, and optimised for scraping of images f
 
 ## Changes
 
+- `--minsize` argument added to `flickr_scraper.py`
+
 - FlickrAPI.json passed as positional argument to `flickr_scraper.py`
+
 
 ## Original ReadMe
 
