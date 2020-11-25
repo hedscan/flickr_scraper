@@ -86,7 +86,7 @@ def get_urls(image_tag: str, n: int, minsize=0, verbose=False):
 
 
 def main(image_tag, n_images, out_dir, minsize, download=False, verbose=False):
-    t = time.time()
+    t = time.monotonic()
 
     # Get image urls
     urls = get_urls(image_tag, n_images, minsize, verbose=verbose)
@@ -96,7 +96,8 @@ def main(image_tag, n_images, out_dir, minsize, download=False, verbose=False):
         for url in urls:
             download_uri(url, out_dir)
 
-    print('Done. (%.1fs)' % (time.time() - t) + ('\nAll images saved to %s' % out_dir if download else ''))
+    print('Done. (%.1fs)' % (time.monotonic() - t)
+          + ('\nAll images saved to %s' % out_dir if download else ''))
 
 
 if __name__ == '__main__':
