@@ -1,14 +1,14 @@
-# Flickr Scraper - Fork Info
+# Flickr Scraper - Fork Info :fork_and_knife:
 
 This fork is maintained by Gethin Davies, and optimised for scraping of images for use as training data for generative adversarial networks.
 
-## Changes
+## Changes :recycle:
 
-- `--minsize` argument added to `flickr_scraper.py`
+- `--minsize`, `--originals` and `--out_dir` options added to `flickr_scraper.py`
 
-- FlickrAPI.json passed as positional argument to `flickr_scraper.py`
+- Pass FlickrAPI JSON as positional argument to `flickr_scraper.py`
 
-## Original ReadMe
+## ReadMe
 
 <img src="https://storage.googleapis.com/ultralytics/logo/logoname1000.png" width="160">
 
@@ -24,7 +24,7 @@ Python 3.7.x or 3.8.x with all of the `pip install -U -r requirements.txt` packa
 
 ### Install
 ```bash
-$ git clone https://github.com/ultralytics/flickr_scraper
+$ git clone https://github.com/hedscan/flickr_scraper
 $ cd flickr_scraper
 $ pip install -U -r requirements.txt
 ```
@@ -33,29 +33,31 @@ $ pip install -U -r requirements.txt
 
 1. Request a Flickr API key: <https://www.flickr.com/services/apps/create/apply>
 
-2. Write your API key and secret in `flickr_scraper.py` L9-L10:
+2. Store your API key and secret in a JSON file:
 
-```python
-key = ''
-secret = ''
+```json
+{
+    "key": "456787687234hjksvb8427679",
+    "secret": "dabadeedabadai"
+}
 ```
 
-3. Search for up to `n` images, and optionally `--download`. URLs are printed to screen and downloaded images are saved in `flickr_scraper/images`. Note that image downloads may be subject to Flickr rate limits and other limitations. See https://www.flickr.com/services/developer/api/ for full information.
+3. Search for up to `n` images, optionally filtering by minimum image size with `--minsize`. If `-v` flag passed, URLs and corresponding image sizes (width, height) are printed to screen. Using `--download` images are downloaded and by default saved to `flickr_scraper/images`, however an alternative can be given using the `--out_dir` option. Note that image downloads may be subject to Flickr rate limits and other limitations. See https://www.flickr.com/services/developer/api/ for full information.
 
 ```bash
-$ python3 flickr_scraper.py --search 'honeybees on flowers' --n 10 --download
+$ python3 flickr_scraper.py path/to/my_key.json --search 'honeybees on flowers' --n 10 --download --minsize 1024
 
-0/10 https://live.staticflickr.com/21/38596887_40df118fd9_o.jpg
-1/10 https://live.staticflickr.com/4800/40729137901_5dafdc039f_o.jpg
-2/10 https://farm8.staticflickr.com/7428/27138770446_6618c10ffb_b.jpg
-3/10 https://live.staticflickr.com/925/29647053658_728134f6ca_o.jpg
-4/10 https://live.staticflickr.com/1732/27535176747_78b83536af_o.jpg
-5/10 https://live.staticflickr.com/7850/47160160332_6b0c88e207_o.jpg
-6/10 https://live.staticflickr.com/1919/44312457665_6f7b6c2c42_o.jpg
-7/10 https://live.staticflickr.com/7922/46297818725_21c13a3629_o.jpg
-8/10 https://live.staticflickr.com/8045/29760999676_e71c938283_o.jpg
-9/10 https://live.staticflickr.com/1770/43276172331_e779b8c161_o.jpg
-Done. (4.1s)
+01/10 https://live.staticflickr.com/8360/8437557091_c3b0a08e7d_o.jpg    (2415, 1610)
+02/10 https://live.staticflickr.com/6149/6200906487_4623a60953_o.jpg    (3088, 2056)
+03/10 https://live.staticflickr.com/6020/6012016425_c581da286e_o.jpg    (2420, 1617)
+04/10 https://live.staticflickr.com/1750/28554413088_66a7356f87_o.jpg   (2966, 2591)
+05/10 https://live.staticflickr.com/1441/23600354234_ac2ddb1554_k.jpg   (2048, 1365)
+06/10 https://live.staticflickr.com/5337/9545156380_b5ac1bf6a7_o.jpg    (4912, 3264)
+07/10 https://live.staticflickr.com/8159/7103042537_735b617109_k.jpg    (2048, 1365)
+08/10 https://live.staticflickr.com/4017/4525284074_173a29272e_h.jpg    (1302, 1600)
+09/10 https://live.staticflickr.com/962/28098876898_e355bb853e_o.jpg    (3031, 2660)
+10/10 https://live.staticflickr.com/3868/14704899756_7d997770a7_k.jpg   (2048, 1362)
+Done. (7.6s)
 All images saved to /Users/glennjocher/PycharmProjects/flickr_scraper/images/honeybees_on_flowers/
 ```
 
