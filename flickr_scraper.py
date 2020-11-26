@@ -7,6 +7,7 @@ import time
 import json
 
 from flickrapi import FlickrAPI
+from tqdm import tqdm
 
 from utils.general import download_uri
 
@@ -55,7 +56,7 @@ def get_images(image_tag='honeybees on flowers', n_images=10):
     license = ()  # https://www.flickr.com/services/api/explore/?method=flickr.imgs.licenses.getInfo
     images = flickr.walk(text=image_tag,  # http://www.flickr.com/services/api/flickr.imgs.search.html
                          extras=extras,  # get urls for acceptable sizes
-                         per_page=5,  # 1-500
+                         per_page=500,  # 1-500
                          license=license,
                          sort='relevance')
     return images
@@ -93,7 +94,7 @@ def main(image_tag, n_images, out_dir, minsize, download=False, verbose=False):
 
     if download:
         os.makedirs(out_dir, exist_ok=True)
-        for url in urls:
+        for url in tqdm(urls, desc="Downloading"):
             download_uri(url, out_dir)
 
     print('Done. (%.1fs)' % (time.monotonic() - t)
@@ -113,7 +114,7 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     if not args.download and args.out_dir:
-        raise UserWarning("out_dir allocated without specifying download." 
+        raise UserWarning("out_dir allocated without specifying download."
                           " To download images use `--download`")
     # default search directory: `./images/search_terms_used/`
     if not args.out_dir:
